@@ -1,0 +1,15 @@
+@import 'abstracts/functions';
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'abstracts/fonts';
+@import 'abstracts/icons';
+@import 'abstracts/classes';
+@import 'abstracts/animations';
+
+figure{
+  @include bgFill;
+}
+
+.invisible{
+  display: none;
+}

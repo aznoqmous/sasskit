@@ -1,0 +1,277 @@
+/* ---------------------------------------------------------------------------------------------------------------------
+MEDIA QUERIES (breakpoint based on Bootstrap 4)
+--------------------------------------------------------------------------------------------------------------------- */
+$CANVAS: (
+        SM: $SM,
+        MD: $MD,
+        LG: $LG,
+        XL: $XL
+);
+@mixin MQ($canvas, $width: min-width) {
+  @if $width != min-width {
+    $width: max-width;
+    $canvas: $canvas - 1px;
+  }
+  @media screen and ($width: $canvas) {
+    @content;
+  }
+}
+
+//reverseMQ
+@mixin rMQ($canvas: $MD){
+  @include MQ($canvas, max-width){
+    @content;
+  }
+}
+
+@mixin mobile{
+  @include rMQ($MD){
+    @content;
+  }
+}
+@mixin nomobile{
+  @include mobile{
+    display: none;
+  }
+}
+
+@mixin larger{
+  @include MQ($XL){
+    @content;
+  }
+}
+
+@mixin screen{
+  @media screen{
+    @content;
+  }
+}
+
+@mixin noprint{
+  @media print{
+    display: none;
+  }
+}
+
+@mixin contentWidth(){
+  width: calc( 100vw - 2rem);
+  @include rMQ($SM){&.mq-stretch{ width: 100vw; } }
+  @include rMQ($MD){&.mq-stretch{ width: 100vw; } }
+  @include MQ($LG){ width: $LG }
+  @include MQ($XL){ width: $XL }
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------------
+TYPOGRAPHY
+--------------------------------------------------------------------------------------------------------------------- */
+// Import a font-face
+@mixin font-face($family, $src, $fileArgs: '', $style: normal, $weight: normal) {
+  @font-face {
+    font-family: $family;
+    src: url('#{$src}.eot#{$fileArgs}'); // IE9 compatibility
+    src: url('#{$src}.eot#{$fileArgs}#iefix') format('embedded-opentype'), // IE8 and below
+    url('#{$src}.ttf#{$fileArgs}') format('truetype'), // Safari, Android, iOS
+    url('#{$src}.woff2#{$fileArgs}') format('woff2'), // new standards
+    url('#{$src}.woff#{$fileArgs}') format('woff'), // standards
+    url('#{$src}.svg#{$fileArgs}##{$family}') format('svg'); // legacy iOS
+    font-style: $style;
+    font-weight: $weight;
+  }
+}
+
+// Icomoon font face
+@mixin font-face-icomoon($family: 'icomoon') {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: #{$family} !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*---------
+BACKGROUND
+-----------*/
+@mixin bcgn( $src, $repeat: no-repeat ) {
+  background: url('#{$assets_dir}/#{$src}');
+  background-repeat: $repeat;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------
+COL 2 3 4
+--------------------------------------------------------------------------------------------------------------------- */
+@mixin col($cols, $triggerMQ: $MD, $gutter: 0) {
+
+  display: flex;
+
+  @if $triggerMQ != none {
+    flex-direction: column;
+  }
+
+  @include MQ($triggerMQ) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  > * {
+    width: 100%;
+    @include MQ($triggerMQ) {
+      width: calc(#{percentage(1/$cols)} - #{$gutter})
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------
+QUICK TRANSITION
+--------------------------------------------------------------------------------------------------------------------- */
+@mixin transition($transitions...){
+  @if length($transitions) == 0 { transition: all 0.3s ease }
+  @else {
+    $ts: ();
+    @each $transition in $transitions{
+      $ts: append($ts, (#{$transition} 0.3s ease), comma);
+    }
+    transition: $ts;
+  }
+}
+@mixin ttransition($t, $transitions...){
+  @if length($transitions) == 0 { transition: all $t ease }
+  @else {
+    $ts: ();
+    @each $transition in $transitions{
+      $ts: append($ts, (#{$transition} $t ease), comma);
+    }
+    transition: $ts;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------
+HOVER STYLE
+--------------------------------------------------------------------------------------------------------------------- */
+@mixin hoverScale($scale: 1.1) {
+  transition: transform 0.2s ease;
+  transform: scale3d(1, 1, 1);
+  &:hover {
+    cursor: pointer;
+    transform: scale3d($scale, $scale, 1);
+  }
+}
+
+@mixin noEvents{
+  pointer-events: none;
+  touch-action: none;
+}
+@mixin allEvents{
+  pointer-events: all;
+  touch-action: unset;
+}
+
+/*------------------------------------------------------------------------
+COMPATIBILITY
+-------------------------------------------------------------------------- */
+@mixin ie{
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
+  }
+}
+@mixin edge{
+  @supports (-ms-ime-align: auto){
+    & {
+      @content;
+    }
+  }
+}
+
+/*------------------------------------------------------------------------
+FIGURE IMAGE UTILS
+-------------------------------------------------------------------------- */
+// mimics background-size contain property
+@mixin contain{
+  object-fit: contain;
+  &.landscape{
+    width: 100%;
+    height: auto;
+  }
+  &.portrait{
+    height: 100%;
+    width: auto;
+  }
+}
+
+// mimics background-size cover property
+@mixin cover{
+  object-fit: cover;
+  &.landscape{
+    height: 100%;
+    width: auto;
+  }
+  &.portrait{
+    width: 100%;
+    height: auto;
+  }
+}
+
+/*------------------------------------------------------------------------
+LAZY FLEX
+-------------------------------------------------------------------------- */
+@mixin flex($direction: row, $align: flex-start, $justify: flex-start, $wrap: nowrap){
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+  flex-wrap: $wrap;
+}
+@mixin flex-center{
+  @include flex(row, center, center);
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+STATE
+----------------------------------------------------------------------------------------------------------------------*/
+@mixin unactive{
+  opacity: 0;
+  @include noEvents;
+  @include transition(opacity);
+  position: absolute;
+}
+@mixin active{
+  opacity: 1;
+  @include allEvents;
+  @include transition(opacity);
+  position: relative;
+}
+
+// require position: relative parent
+@mixin abscover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+// cover element with its background-image
+@mixin bgFill{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@mixin bgFit{
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@mixin color($color1, $color2, $t: 0.2s){
+  color: $color1;
+  transition: color $t ease;
+  &:hover{
+    color: $color2;
+  }
+}

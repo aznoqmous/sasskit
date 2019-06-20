@@ -1,0 +1,87 @@
+/*----------------------------------------------------------------------------------------------------------------------
+ANIMATIONS
+----------------------------------------------------------------------------------------------------------------------*/
+@mixin rotateInf{
+  animation-name: rotateInf;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes rotateInf {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(-360deg) }
+}
+
+
+@mixin idle{
+  animation-name: idle;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+@keyframes idle {
+  0% { transform: translate(0%, 0) }
+  50% { transform: translate(10%, 0) }
+  100% { transform: translate(0%, 0) }
+}
+
+
+@mixin loading {
+  animation-name: loading;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  content: '';
+}
+@keyframes loading {
+  0%   { content: '.  '}
+  25%  { content: '.. '}
+  50%  { content: '...'}
+  75%  { content: '   '}
+  100% { content: '.  '}
+}
+
+
+@mixin shake-lr{
+  animation-name: shake-lr;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.455, 0.030, 0.515, 0.955);
+  animation-iteration-count: infinite;
+}
+
+$size: 10;
+@keyframes shake-lr {
+  0%,
+  100% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+  }
+  70% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+  }
+  76%,
+  80%,
+  84% {
+    -webkit-transform: rotate(-#{$size}deg);
+    transform: rotate(-#{$size}deg);
+  }
+  78%,
+  82%,
+  86% {
+    -webkit-transform: rotate(#{$size}deg);
+    transform: rotate(#{$size}deg);
+  }
+  90% {
+    -webkit-transform: rotate(-#{$size*0.8}deg);
+    transform: rotate(-#{$size*0.8}deg);
+  }
+  95% {
+    -webkit-transform: rotate(#{$size*0.8}deg);
+    transform: rotate(#{$size*0.8}deg);
+  }
+}
