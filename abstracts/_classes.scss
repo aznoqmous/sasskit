@@ -1,12 +1,3 @@
-[class*=col-]{
-  @include flex(row, stretch, space-between, wrap);
-  padding: 0 1rem;
-  margin: 0 -2rem;
-  > *, [class*=col-] {
-    padding: 0 1rem;
-  }
-}
-
 .mobile{
   display: none;
   @include mobile{
