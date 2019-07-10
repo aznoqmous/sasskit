@@ -238,13 +238,11 @@ STATE
   opacity: 0;
   @include noEvents;
   @include transition(opacity);
-  position: absolute;
 }
 @mixin active{
   opacity: 1;
   @include allEvents;
   @include transition(opacity);
-  position: relative;
 }
 
 // require position: relative parent
