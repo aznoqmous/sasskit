@@ -11,14 +11,13 @@ sasskit / scss folder
 │   └── _resets.scss       # basic css rules
 │   └── _variables.scss    # global variables
 ├── _sasskit.scss          # library entrypoint
-├── main.scss              # your freshsly created file
 ├── .gitignore             # speaks for itself
 └── README.md              # this file
 ```
 ## How to use
 `git clone` or download full project and put it inside your sass folder.
 
-Create a `main.scss` inside the project folder like so :
+Import full lib like so :
 ```scss
 @import 'sasskit';
 // import your custom .scss files here
