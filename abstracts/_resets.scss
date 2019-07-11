@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
 }
-*:not(ul){
+*:not(ul):not(ol){
   padding: 0;
   margin: 0;
 }
