@@ -25,4 +25,6 @@ Import full lib like so :
 
 Set `main.scss` to be the entrypoint of your `SASS` compiler.
 
-Start to code !
+_Start to code !_
+
+Feel free to edit which files are loaded by editing `_sasskit.scss`
